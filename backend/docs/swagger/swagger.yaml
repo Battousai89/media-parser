@@ -1,0 +1,1226 @@
+basePath: /
+definitions:
+  dto.DictionaryItem:
+    properties:
+      code:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  dto.DictionaryResponse:
+    properties:
+      media_types:
+        items:
+          $ref: '#/definitions/dto.DictionaryItem'
+        type: array
+      request_statuses:
+        items:
+          $ref: '#/definitions/dto.DictionaryItem'
+        type: array
+      source_statuses:
+        items:
+          $ref: '#/definitions/dto.DictionaryItem'
+        type: array
+    type: object
+  dto.DownloadURLRequest:
+    properties:
+      url:
+        type: string
+    required:
+    - url
+    type: object
+  dto.ErrorData:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    type: object
+  dto.MediaCheckRequest:
+    properties:
+      url:
+        type: string
+    required:
+    - url
+    type: object
+  dto.MediaCheckResponse:
+    properties:
+      available:
+        type: boolean
+      file_size:
+        type: integer
+      mime_type:
+        type: string
+      url:
+        type: string
+    type: object
+  dto.MediaDetail:
+    properties:
+      available:
+        type: boolean
+      checked_at:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      file_size:
+        type: integer
+      hash:
+        type: string
+      id:
+        type: string
+      media_type:
+        type: string
+      media_type_id:
+        type: integer
+      meta: {}
+      mime_type:
+        type: string
+      sources:
+        items:
+          $ref: '#/definitions/dto.SourceBrief'
+        type: array
+      title:
+        type: string
+      updated_at:
+        type: string
+      url:
+        type: string
+    type: object
+  dto.MediaUploadRequest:
+    properties:
+      media_id:
+        type: string
+      source_id:
+        minimum: 1
+        type: integer
+    type: object
+  dto.PaginatedResponse:
+    properties:
+      items: {}
+      limit:
+        type: integer
+      offset:
+        type: integer
+      total:
+        type: integer
+    type: object
+  dto.ParseAllRequest:
+    properties:
+      limit:
+        maximum: 1000
+        minimum: 1
+        type: integer
+      media_type:
+        enum:
+        - image
+        - video
+        - audio
+        - document
+        - archive
+        - other
+        type: string
+      media_type_ids:
+        items:
+          type: integer
+        type: array
+      offset:
+        minimum: 0
+        type: integer
+      priority:
+        maximum: 10
+        minimum: 0
+        type: integer
+    required:
+    - limit
+    type: object
+  dto.ParseBatchRequest:
+    properties:
+      limit:
+        maximum: 1000
+        minimum: 1
+        type: integer
+      media_type:
+        enum:
+        - image
+        - video
+        - audio
+        - document
+        - archive
+        - other
+        type: string
+      media_type_ids:
+        items:
+          type: integer
+        type: array
+      offset:
+        minimum: 0
+        type: integer
+      priority:
+        maximum: 10
+        minimum: 0
+        type: integer
+      urls:
+        items:
+          type: string
+        maxItems: 100
+        minItems: 1
+        type: array
+    required:
+    - limit
+    - urls
+    type: object
+  dto.ParseFirstRequest:
+    properties:
+      media_type:
+        enum:
+        - image
+        - video
+        - audio
+        - document
+        - archive
+        - other
+        type: string
+      media_type_ids:
+        items:
+          type: integer
+        type: array
+      priority:
+        maximum: 10
+        minimum: 0
+        type: integer
+    type: object
+  dto.ParseNRequest:
+    properties:
+      count:
+        maximum: 1000
+        minimum: 1
+        type: integer
+      media_type:
+        enum:
+        - image
+        - video
+        - audio
+        - document
+        - archive
+        - other
+        type: string
+      media_type_ids:
+        items:
+          type: integer
+        type: array
+      offset:
+        minimum: 0
+        type: integer
+      priority:
+        maximum: 10
+        minimum: 0
+        type: integer
+    required:
+    - count
+    type: object
+  dto.ParseResponse:
+    properties:
+      message:
+        type: string
+      request_id:
+        type: string
+      status:
+        type: string
+    type: object
+  dto.ParseSourceRequest:
+    properties:
+      limit:
+        maximum: 1000
+        minimum: 1
+        type: integer
+      media_type:
+        enum:
+        - image
+        - video
+        - audio
+        - document
+        - archive
+        - other
+        type: string
+      media_type_ids:
+        items:
+          type: integer
+        type: array
+      offset:
+        minimum: 0
+        type: integer
+      priority:
+        maximum: 10
+        minimum: 0
+        type: integer
+      source_id:
+        minimum: 1
+        type: integer
+    required:
+    - limit
+    - source_id
+    type: object
+  dto.ParseURLRequest:
+    properties:
+      limit:
+        maximum: 1000
+        minimum: 1
+        type: integer
+      media_type:
+        enum:
+        - image
+        - video
+        - audio
+        - document
+        - archive
+        - other
+        type: string
+      media_type_ids:
+        items:
+          type: integer
+        type: array
+      offset:
+        minimum: 0
+        type: integer
+      priority:
+        maximum: 10
+        minimum: 0
+        type: integer
+      url:
+        type: string
+    required:
+    - limit
+    - url
+    type: object
+  dto.PatternCreateRequest:
+    properties:
+      media_type_id:
+        minimum: 1
+        type: integer
+      name:
+        maxLength: 255
+        type: string
+      priority:
+        minimum: 0
+        type: integer
+      regex:
+        type: string
+    required:
+    - media_type_id
+    - name
+    - regex
+    type: object
+  dto.PatternItem:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      media_type:
+        type: string
+      media_type_id:
+        type: integer
+      name:
+        type: string
+      priority:
+        type: integer
+      regex:
+        type: string
+    type: object
+  dto.PatternUpdateRequest:
+    properties:
+      media_type_id:
+        minimum: 1
+        type: integer
+      name:
+        maxLength: 255
+        type: string
+      priority:
+        minimum: 0
+        type: integer
+      regex:
+        type: string
+    type: object
+  dto.RequestDetail:
+    properties:
+      completed_at:
+        type: string
+      created_at:
+        type: string
+      error_message:
+        type: string
+      id:
+        type: string
+      limit_count:
+        type: integer
+      max_retries:
+        type: integer
+      media_type_ids:
+        items:
+          type: integer
+        type: array
+      offset_count:
+        type: integer
+      priority:
+        type: integer
+      retry_count:
+        type: integer
+      sources:
+        items:
+          $ref: '#/definitions/dto.RequestSourceItem'
+        type: array
+      started_at:
+        type: string
+      status:
+        type: string
+      status_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  dto.RequestSourceItem:
+    properties:
+      error_message:
+        type: string
+      media_count:
+        type: integer
+      parsed_count:
+        type: integer
+      source_id:
+        type: integer
+      source_name:
+        type: string
+      status:
+        type: string
+      status_id:
+        type: integer
+    type: object
+  dto.Response:
+    properties:
+      data: {}
+      error:
+        $ref: '#/definitions/dto.ErrorData'
+      success:
+        type: boolean
+    type: object
+  dto.SourceBrief:
+    properties:
+      base_url:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  dto.SourceCreateRequest:
+    properties:
+      base_url:
+        maxLength: 2048
+        type: string
+      name:
+        maxLength: 255
+        type: string
+      status_id:
+        minimum: 1
+        type: integer
+    required:
+    - base_url
+    - name
+    type: object
+  dto.SourceDetail:
+    properties:
+      base_url:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        type: string
+      status_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  dto.SourceItem:
+    properties:
+      base_url:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        type: string
+      status_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  dto.SourceUpdateRequest:
+    properties:
+      base_url:
+        maxLength: 2048
+        type: string
+      name:
+        maxLength: 255
+        type: string
+      status_id:
+        minimum: 1
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Backend for parsing media from the internet
+  title: Media Parser API
+  version: "1.0"
+paths:
+  /api/v1/dictionaries:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.DictionaryResponse'
+              type: object
+      summary: Получить все справочники
+      tags:
+      - dictionaries
+  /api/v1/dictionaries/media-types:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dto.DictionaryItem'
+                  type: array
+              type: object
+      summary: Получить типы медиа
+      tags:
+      - dictionaries
+  /api/v1/dictionaries/request-statuses:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dto.DictionaryItem'
+                  type: array
+              type: object
+      summary: Получить статусы запросов
+      tags:
+      - dictionaries
+  /api/v1/dictionaries/source-statuses:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dto.DictionaryItem'
+                  type: array
+              type: object
+      summary: Получить статусы источников
+      tags:
+      - dictionaries
+  /api/v1/download/:id:
+    post:
+      parameters:
+      - description: Media ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Скачать медиа по ID
+      tags:
+      - download
+  /api/v1/download/url:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Запрос на скачивание
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DownloadURLRequest'
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Скачать медиа по URL
+      tags:
+      - download
+  /api/v1/media:
+    get:
+      parameters:
+      - description: Тип медиа (image, video, document, archive, other)
+        in: query
+        name: media_type
+        type: string
+      - description: Доступность
+        in: query
+        name: available
+        type: boolean
+      - default: 20
+        description: Лимит
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.PaginatedResponse'
+              type: object
+      summary: Список медиа
+      tags:
+      - media
+  /api/v1/media/:id:
+    delete:
+      parameters:
+      - description: Media ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Удалить медиа
+      tags:
+      - media
+    get:
+      parameters:
+      - description: Media ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.MediaDetail'
+              type: object
+      summary: Получить медиа по ID
+      tags:
+      - media
+  /api/v1/media/check:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: URL для проверки
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.MediaCheckRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.MediaCheckResponse'
+              type: object
+      summary: Проверить доступность URL
+      tags:
+      - media
+  /api/v1/media/upload:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Запрос на загрузку
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.MediaUploadRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Загрузить медиа
+      tags:
+      - media
+  /api/v1/parse/all:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Запрос на парсинг
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ParseAllRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ParseResponse'
+              type: object
+      summary: Парсинг всех активных источников
+      tags:
+      - parse
+  /api/v1/parse/batch:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Запрос на парсинг
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ParseBatchRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ParseResponse'
+              type: object
+      summary: Пакетный парсинг URL
+      tags:
+      - parse
+  /api/v1/parse/first:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Запрос на парсинг
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ParseFirstRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ParseResponse'
+              type: object
+      summary: Первое медиа с каждого источника
+      tags:
+      - parse
+  /api/v1/parse/n:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Запрос на парсинг
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ParseNRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ParseResponse'
+              type: object
+      summary: Парсинг N медиа
+      tags:
+      - parse
+  /api/v1/parse/source:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Запрос на парсинг
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ParseSourceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ParseResponse'
+              type: object
+      summary: Парсинг по ID источника
+      tags:
+      - parse
+  /api/v1/parse/url:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Запрос на парсинг
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ParseURLRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ParseResponse'
+              type: object
+      summary: Парсинг одного URL
+      tags:
+      - parse
+  /api/v1/patterns:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dto.PatternItem'
+                  type: array
+              type: object
+      summary: Список паттернов
+      tags:
+      - patterns
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные паттерна
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.PatternCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.PatternItem'
+              type: object
+      summary: Добавить паттерн
+      tags:
+      - patterns
+  /api/v1/patterns/:id:
+    delete:
+      parameters:
+      - description: Pattern ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Удалить паттерн
+      tags:
+      - patterns
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Pattern ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные для обновления
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.PatternUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.PatternItem'
+              type: object
+      summary: Обновить паттерн
+      tags:
+      - patterns
+  /api/v1/requests:
+    get:
+      parameters:
+      - description: Status ID
+        in: query
+        name: status_id
+        type: integer
+      - description: Media type
+        in: query
+        name: media_type
+        type: string
+      - default: 20
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.PaginatedResponse'
+              type: object
+      summary: Список запросов
+      tags:
+      - requests
+  /api/v1/requests/:id:
+    delete:
+      parameters:
+      - description: Request ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Отменить запрос
+      tags:
+      - requests
+    get:
+      parameters:
+      - description: Request ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.RequestDetail'
+              type: object
+      summary: Получить статус запроса
+      tags:
+      - requests
+  /api/v1/requests/:id/media:
+    get:
+      parameters:
+      - description: Request ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - default: 20
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.PaginatedResponse'
+              type: object
+      summary: Медиа запроса
+      tags:
+      - requests
+  /api/v1/sources:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dto.SourceItem'
+                  type: array
+              type: object
+      summary: Список источников
+      tags:
+      - sources
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные источника
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SourceCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.SourceDetail'
+              type: object
+      summary: Добавить источник
+      tags:
+      - sources
+  /api/v1/sources/:id:
+    delete:
+      parameters:
+      - description: Source ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Удалить источник
+      tags:
+      - sources
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Source ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные для обновления
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SourceUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.SourceDetail'
+              type: object
+      summary: Обновить источник
+      tags:
+      - sources
+  /api/v1/sources/:id/parse:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Source ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Параметры парсинга
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ParseSourceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ParseResponse'
+              type: object
+      summary: Парсинг конкретного источника
+      tags:
+      - sources
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: X-Auth-Token
+    type: apiKey
+swagger: "2.0"

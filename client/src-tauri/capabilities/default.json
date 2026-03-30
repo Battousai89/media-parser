@@ -1,0 +1,30 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the main window",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "opener:default",
+    "fs:default",
+    "fs:allow-write-file",
+    "fs:allow-mkdir",
+    "fs:allow-exists",
+    "fs:allow-download-write",
+    "fs:scope-download-recursive",
+    "fs:allow-home-read",
+    "fs:allow-home-write",
+    "fs:allow-home-read-recursive",
+    "fs:allow-home-write-recursive",
+    "fs:allow-app-write",
+    "fs:allow-app-write-recursive",
+    "fs:scope"
+  ],
+  "platforms": ["macOS", "windows", "linux"],
+  "scope": {
+    "fs": {
+      "requireLiteralLeadingDot": false,
+      "allowedPaths": ["**", "$DOWNLOAD/**", "$HOME/**", "$APPDATA/**", "$APPDATA/../Local/**", "$APPDATA/../Roaming/**"]
+    }
+  }
+}

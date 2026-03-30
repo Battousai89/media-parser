@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Media Parser — Скоро открытие</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Oxygen, Ubuntu, Cantarell, sans-serif;
+                background: linear-gradient(
+                    135deg,
+                    #1a1a2e 0%,
+                    #16213e 50%,
+                    #0f3460 100%
+                );
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                overflow: hidden;
+            }
+
+            .container {
+                text-align: center;
+                padding: 2rem;
+                max-width: 800px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .logo {
+                width: 150px;
+                height: 150px;
+                margin: 0 auto 2rem;
+                background: linear-gradient(135deg, #18a058 0%, #00d9a5 100%);
+                border-radius: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 20px 60px rgba(24, 160, 88, 0.4);
+                animation: float 3s ease-in-out infinite;
+            }
+
+            .logo svg {
+                width: 80px;
+                height: 80px;
+                fill: white;
+            }
+
+            @keyframes float {
+                0%,
+                100% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-20px);
+                }
+            }
+
+            h1 {
+                font-size: 3.5rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+                background: linear-gradient(135deg, #fff 0%, #18a058 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .subtitle {
+                font-size: 1.3rem;
+                color: #a0a0a0;
+                margin-bottom: 3rem;
+                line-height: 1.6;
+            }
+
+            .features {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .feature {
+                background: rgba(255, 255, 255, 0.05);
+                padding: 1.5rem;
+                border-radius: 15px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                transition:
+                    transform 0.3s ease,
+                    box-shadow 0.3s ease;
+            }
+
+            .feature:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 30px rgba(24, 160, 88, 0.2);
+            }
+
+            .feature-icon {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .feature-title {
+                font-size: 1.1rem;
+                font-weight: 600;
+                margin-bottom: 0.3rem;
+                color: #18a058;
+            }
+
+            .feature-desc {
+                font-size: 0.9rem;
+                color: #888;
+            }
+
+            .download-section {
+                background: rgba(24, 160, 88, 0.1);
+                border: 2px solid #18a058;
+                border-radius: 20px;
+                padding: 2.5rem;
+                margin-top: 2rem;
+            }
+
+            .download-title {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+            }
+
+            .download-desc {
+                color: #a0a0a0;
+                margin-bottom: 1.5rem;
+            }
+
+            .download-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.8rem;
+                background: linear-gradient(135deg, #18a058 0%, #00d9a5 100%);
+                color: white;
+                text-decoration: none;
+                padding: 1rem 2.5rem;
+                border-radius: 50px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                box-shadow: 0 10px 30px rgba(24, 160, 88, 0.3);
+            }
+
+            .download-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 15px 40px rgba(24, 160, 88, 0.5);
+            }
+
+            .download-btn svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .buttons-section {
+                display: flex;
+                gap: 1.5rem;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-top: 2rem;
+            }
+
+            .action-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.8rem;
+                color: white;
+                text-decoration: none;
+                padding: 1rem 2rem;
+                border-radius: 50px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+
+            .action-btn svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .repo-btn {
+                background: rgba(255, 255, 255, 0.1);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+            }
+
+            .repo-btn:hover {
+                background: rgba(255, 255, 255, 0.2);
+                border-color: #fff;
+                transform: translateY(-3px);
+            }
+
+            .download-btn {
+                background: linear-gradient(135deg, #18a058 0%, #00d9a5 100%);
+                box-shadow: 0 10px 30px rgba(24, 160, 88, 0.3);
+            }
+
+            .download-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 15px 40px rgba(24, 160, 88, 0.5);
+            }
+
+            .api-info {
+                margin-top: 2rem;
+                padding: 1.5rem;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 15px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .api-info p {
+                color: #a0a0a0;
+                margin-bottom: 1rem;
+            }
+
+            .api-link {
+                color: #18a058;
+                text-decoration: none;
+                font-weight: 600;
+                transition: color 0.3s ease;
+            }
+
+            .api-link:hover {
+                color: #00d9a5;
+            }
+
+            .tg-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: #0088cc;
+                text-decoration: none;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+
+            .tg-link:hover {
+                color: #00aaff;
+            }
+
+            .particles {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            .particle {
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                background: rgba(24, 160, 88, 0.5);
+                border-radius: 50%;
+                animation: rise 15s infinite;
+            }
+
+            @keyframes rise {
+                0% {
+                    opacity: 0;
+                    transform: translateY(100vh) scale(0);
+                }
+                50% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-100vh) scale(1);
+                }
+            }
+
+            .status-badge {
+                display: inline-block;
+                padding: 0.5rem 1.5rem;
+                background: rgba(24, 160, 88, 0.2);
+                border: 1px solid #18a058;
+                border-radius: 50px;
+                font-size: 0.9rem;
+                color: #18a058;
+                margin-bottom: 1.5rem;
+            }
+
+            .status-dot {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                background: #18a058;
+                border-radius: 50%;
+                margin-right: 0.5rem;
+                animation: pulse 2s infinite;
+            }
+
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.5;
+                }
+            }
+
+            @media (max-width: 768px) {
+                h1 {
+                    font-size: 2.5rem;
+                }
+                .subtitle {
+                    font-size: 1.1rem;
+                }
+                .logo {
+                    width: 120px;
+                    height: 120px;
+                }
+                .logo svg {
+                    width: 60px;
+                    height: 60px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="particles" id="particles"></div>
+
+        <div class="container">
+            <div class="logo">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"
+                    />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+            </div>
+
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                Скоро открытие
+            </div>
+
+            <h1>Media Parser</h1>
+            <p class="subtitle">
+                Мощное приложение для парсинга медиа-контента из интернета.<br />
+                Быстро. Надёжно. Удобно.
+            </p>
+
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🚀</div>
+                    <div class="feature-title">Быстрый парсинг</div>
+                    <div class="feature-desc">Многопоточная обработка URL</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💾</div>
+                    <div class="feature-title">Кэширование</div>
+                    <div class="feature-desc">Redis для ускорения</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📦</div>
+                    <div class="feature-title">Tauri Desktop</div>
+                    <div class="feature-desc">Кроссплатформенность</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔌</div>
+                    <div class="feature-title">REST API</div>
+                    <div class="feature-desc">Полная документация</div>
+                </div>
+            </div>
+
+            <div class="buttons-section">
+                <!-- КНОПКА: РЕПОЗИТОРИЙ -->
+                <a
+                    href="https://github.com/Battousai89/media-parser"
+                    class="action-btn repo-btn"
+                    target="_blank"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path
+                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                        />
+                    </svg>
+                    Репозиторий
+                </a>
+                <!-- КНОПКА: СКАЧАТЬ КЛИЕНТ -->
+                <a
+                    href="https://github.com/Battousai89/media-parser/releases"
+                    class="action-btn download-btn"
+                    target="_blank"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Скачать клиент
+                </a>
+            </div>
+
+            <div class="api-info">
+                <p>🌐 Официальный бэкенд уже работает!</p>
+                <p>
+                    <a
+                        href="https://battousai.fun"
+                        class="api-link"
+                        target="_blank"
+                        >battousai.fun</a
+                    >
+                </p>
+                <p>📬 Для получения API токена напишите в Telegram:</p>
+                <p>
+                    <a
+                        href="https://t.me/HimuraDev"
+                        class="tg-link"
+                        target="_blank"
+                    >
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .24z"
+                            />
+                        </svg>
+                        @HimuraDev
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <script>
+            // Генерация частиц
+            const particlesContainer = document.getElementById("particles");
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement("div");
+                particle.className = "particle";
+                particle.style.left = Math.random() * 100 + "%";
+                particle.style.animationDelay = Math.random() * 15 + "s";
+                particle.style.animationDuration =
+                    10 + Math.random() * 10 + "s";
+                particlesContainer.appendChild(particle);
+            }
+        </script>
+    </body>
+</html>

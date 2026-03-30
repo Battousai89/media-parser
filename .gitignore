@@ -1,0 +1,17 @@
+build/
+dist/
+target/
+.env
+.env.prod
+*.lock
+*.log
+logs/
+backups/
+cache/
+node_modules/
+-lock.json
+.ide/
+.idea/
+.txt
+backend/server
+nginx/
