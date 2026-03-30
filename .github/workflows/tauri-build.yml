@@ -15,9 +15,10 @@ jobs:
           - platform: 'windows-latest'
             os-name: 'windows'
             artifact-name: 'tauri-windows'
-          - platform: 'macos-latest'
-            os-name: 'macos'
-            artifact-name: 'tauri-macos'
+          # macOS временно отключен из-за проблем с иконками
+          # - platform: 'macos-latest'
+          #   os-name: 'macos'
+          #   artifact-name: 'tauri-macos'
           - platform: 'ubuntu-22.04'
             os-name: 'linux'
             artifact-name: 'tauri-linux'
@@ -55,8 +56,16 @@ jobs:
         run: npm ci
         working-directory: ./client
 
+      - name: Generate icons (if source exists)
+        run: |
+          if [ -f "src-tauri/icons/source.png" ]; then
+            npm run tauri icon ./src-tauri/icons/source.png
+          fi
+        working-directory: ./client
+        continue-on-error: true
+
       - name: Build Tauri
-        run: npm run tauri build
+        run: npm run tauri build -- --bundles deb msi exe
         working-directory: ./client
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -68,10 +77,7 @@ jobs:
           path: |
             client/src-tauri/target/release/bundle/msi/*.msi
             client/src-tauri/target/release/bundle/exe/*.exe
-            client/src-tauri/target/release/bundle/dmg/*.dmg
-            client/src-tauri/target/release/bundle/app/*.app
             client/src-tauri/target/release/bundle/deb/*.deb
-            client/src-tauri/target/release/bundle/appimage/*.AppImage
           if-no-files-found: ignore
           retention-days: 30
 
