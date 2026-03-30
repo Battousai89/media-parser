@@ -65,7 +65,7 @@ jobs:
         continue-on-error: true
 
       - name: Build Tauri
-        run: npm run tauri build -- --bundles deb msi exe
+        run: npm run tauri build
         working-directory: ./client
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,7 +76,7 @@ jobs:
           name: ${{ matrix.artifact-name }}
           path: |
             client/src-tauri/target/release/bundle/msi/*.msi
-            client/src-tauri/target/release/bundle/exe/*.exe
+            client/src-tauri/target/release/bundle/nsis/*.exe
             client/src-tauri/target/release/bundle/deb/*.deb
           if-no-files-found: ignore
           retention-days: 30
